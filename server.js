@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const db = require('./db');
 
+// or import 'dotenv/config' if you're using ES6
+require('dotenv').config();
 
 
 app.use(express.json());
@@ -20,6 +22,9 @@ app.use('/person',personRoutes);
 const menuItemRoutes = require('./routes/menuItemRoutes');
 app.use('/',menuItemRoutes) 
 
-app.listen(3000, ()=>{
+
+const PORT=process.env.PORT || 3000;
+
+app.listen(PORT, ()=>{
     console.log("server listening on port 3000")
 })
