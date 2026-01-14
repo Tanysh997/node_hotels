@@ -6,9 +6,14 @@ const db = require('./db');
 require('dotenv').config();
 
 
-app.use(express.json());
+app.use(express.json());//body-parsar
 
-app.get('/',(req, res)=>{
+const logRequest = (req,res,next)=>{
+    console.log(`${new Date().toLocaleString()} Request login to this url ${req.originalUrl}`);
+    next();
+}
+
+app.get('/', logRequest ,(req, res)=>{
     res.send("Welcome to my hotel.... How can I help you ?")
 })
 

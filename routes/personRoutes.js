@@ -1,4 +1,5 @@
-const express = require('express');  //BODYPARSER IS BUILT INTO EXPRESS NOW
+const express = require('express'); 
+ //BODYPARSER IS BUILT INTO EXPRESS NOW
 const router = express.Router();
 
 const Person=require('./../models/Person');

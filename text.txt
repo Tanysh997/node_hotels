@@ -1,0 +1,242 @@
+var a=9;
+var b=9;
+console.log(a*b);
+var array=["bentley","suzuki","hero"];
+console.log(array);
+array.push("bmw");
+console.log(array);
+var array={
+    name:"harsh",
+    age:29,
+    profession:"businessman"
+};
+console.log(array.name)
+
+var count=10;
+for(var i=1; i<=count; i++){
+    console.log(i);
+}
+
+if(count<10){
+    console.log("hello");
+}
+else{
+    console.log("wello");
+}
+
+
+var age=[12,13,14,15,16];
+var x=age.filter(checkAge);
+function checkAge(age){
+   return age<15;
+}
+console.log(x);
+
+var prompt=require('prompt-sync')();
+const y=prompt("please enter your number");
+if(y<15){
+    console.log("hello");
+}
+else{
+    console.log("wello");
+}
+
+
+
+
+
+//FUNCTION
+
+
+
+
+
+function add(a,b){
+    return a+b;
+}
+var result = add(3,4);
+console.log(result);
+
+
+(function add(){
+    console.log("Hello");
+})(); 
+
+
+
+
+
+//CALLBACK FUNCTION
+
+
+
+
+
+var add=(a,b)=>{return a+b;}
+//var add=(a,b)=>a+b;
+var result=add(2,4);
+console.log(result);
+
+
+
+
+
+//FILE CREATION OR FILE SYSTEM AND OS
+
+
+
+
+
+var fs=require('fs');
+var os=require('os');
+
+var user=os.userInfo();
+console.log(user);
+console.log(user.username);
+
+fs.appendFile('greeting.txt','Hii ' + user.username + '!\n', ()=>{
+    console.log('file is created')
+});
+
+
+
+
+
+//IMPORT FILE
+
+
+
+
+
+//LODASH
+
+
+
+
+//first we need to install lodash (npm i lodash) in terminal
+var _= require('lodash');
+
+var arr = ["tanish","tanish",1,2,1,2,"name","age","age"];
+const filter = _.uniq(arr); //for finding unique element in array
+console.log(filter);
+console.log(_.isString('tanish')); //for checking this is true or false
+
+
+
+
+
+//CONVERT JSON TO JAVASCRIPT OBJECT   BY parse() function
+//CONVERT JAVASCRIPT OBJECT TO JSON   BY stringify() function
+
+
+
+
+const jsonString='{"name":"John","age":30,"city":"New York"}';
+const jsonObject=JSON.parse(jsonString);//CONVERT JSON STRING TO OBJECT
+console.log(jsonObject.name);//OUTPUT : John
+
+
+
+const objectToConvert={
+    name:"tanish",
+    age:20
+};
+const jsonStringified=JSON.stringify(objectToConvert);
+console.log(jsonStringified);//OUTPUT : {"name":"tanish",age:20}
+
+
+
+
+
+//CREATING SERVER
+
+
+
+
+//first we import express from express.js sites in terminal
+const express = require('express')
+const app = express()
+const port = 3000
+         
+
+//after every changes we need to restart the server
+            //req - request  res - response
+app.get('/',(req, res)=>{
+    res.send("Welcome to my hotel.... How can I help you ?")
+})
+
+app.get('/tanish',(req, res)=>{
+    res.send("Hello,what do you want!")
+})
+
+app.get('/chicken', (req, res)=>{
+    res.send("sure sir, I would love to serve chicken")
+})
+
+app.get('/idli', (req, res)=>{
+    var customized_idli={
+        name:'rava idli',
+        size:'10cm diameter',
+    }
+    res.send(customized_idli)
+})
+
+
+//like a home
+
+app.listen(3000, ()=>{
+    console.log("server listening on port 3000")
+})
+
+//OR
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// })
+
+
+
+
+
+
+//MONGODB
+
+
+
+
+
+//TO ENTER INTO THE MONGODB SERVER WE NEED TO ENTER THE COMMAND mongosh
+//TABLE-COLLECTION 
+//ROW/RECORDS-DOCUMENT
+//COLUMN-FIELD
+
+
+//CREATE A DATABASE - use database_name
+//CREATE A TABLE - db.createCollection("users")
+//TO DISPLAY ALL TABLES/COLLECTIONS IN A CURRENT DATABASE - show collections
+//TO INSERT A CONTENT IN A TABLE - db.users.insertOne({name:"tanish", age:22})
+//TO READ ALL DOCUMENTS/DATA FROM THE users TABLE - db.users.find() 
+//TO UPDATE ONE DOCUMENT/RECORD - db.users.updateOne(filter,update)  or db.users.updateOne({name:"tanish"},{$set:{age:26}})
+//revise all the update from chatgpt
+//TO DELETE DOCUMENT/RECORD - db.users.deleteOne({name:"tanish"})
+
+
+const db=require('./db');
+const Person=require('./models/Person');
+
+const bodyParser=require('body-parser');
+app.use(bodyParser.json());
+
+app.post('/person',async(req,res)=>{
+  try{
+    const data=req.body; //ASSUMING THE PERSON DATA IS STORED IN A REQUEST BODY AFTER PARSES BY THE bodyparser.json()
+  const newPerson=new Person(data);//CREATE A NEW PERSON DOCUMENT USING A MONGOOSE MODEL
+  const response=await newPerson.save(); //SAVED THE NEWPERSON TO A DATABASE
+  console.log('data saved');
+  res.status(200).json(response);
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({error:'Internal server error'});
+  }
+})
